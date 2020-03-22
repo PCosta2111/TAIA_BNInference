@@ -10,11 +10,10 @@ parser.add_argument('-t', '--target', metavar='xi')
 parser.add_argument('-u', '--universe', nargs='+')
 args = parser.parse_args()
 
-f = open("alarm.bif", "r")
+f = open("earthquake.bif", "r")
 BIF = f.readlines()
 BIF = fix_white_space(BIF)
 nodes = parse_bif(BIF)
-print_nodes(nodes)
 t, u = process_arguments(args, nodes)
 
 v = {}
@@ -25,7 +24,7 @@ for n in nodes:
 def initialize_variables():
     lst = []
     for nod in nodes:
-        p = Probability([(nod, v[nod])], [(p, v[p]) for p in nod.parents])
+        p = Probability((nod, v[nod]), [(p, v[p]) for p in nod.parents])
         lst.insert(0, p)
     return lst
 
