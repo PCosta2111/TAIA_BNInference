@@ -68,5 +68,5 @@ for it in range(0, args.repeat):
                     len(df) + 1000) + " iterations. Result: " + str(len(df[df[t[0].name]]) / len(df)))
                 break
             prev_prob = curr_prob
-    if len(df) > args.maxiter:
+    if len(df) >= args.maxiter:
         print("   => Maximum number of iterations reached. Result: " + str(len(df[df[t[0].name]]) / len(df)))
