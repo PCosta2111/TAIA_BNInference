@@ -1,5 +1,6 @@
 import random
 from pprint import pprint
+import numpy as np
 
 
 def truncate(n, decimals=0):
@@ -85,5 +86,28 @@ def encode_nodes(nodes):
     return nodes, encode_dict
 
 
-def get_new_vi(xi, v):
-   pass
+def get_new_vi_x(xi, v):
+    key = val = None
+    if not xi.parents:
+        d = xi.get_dist()
+        key, val = list(d.items())[0]
+    else:
+        parents_value = tuple([v[p] for p in xi.parents])
+        for k, v in xi.get_dist().items():
+            my_val, par_val = k[0], k[1]
+            if par_val == parents_value:
+                key = my_val
+                val = v
+                break
+    prob_cumsum = np.cumsum(list(val))
+    k = 0
+    r = random.uniform(0, 1)
+    if r < prob_cumsum[0]:
+        return key[0]
+    for p in prob_cumsum:
+        if r > p:
+            return key[k + 1]
+        k += 1
+    return key[k]
+
+    #

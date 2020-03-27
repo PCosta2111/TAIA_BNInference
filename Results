@@ -1,4 +1,4 @@
-Mary | Not_Burg, Not_Earth
+Pr(Mary=True | Burg=False, Earth=False)
     0.011333333333333334
     0.008
     0.01
@@ -8,7 +8,7 @@ Mary | Not_Burg, Not_Earth
     0.010285714285714285
     0.011642857142857142
 
-John | Not_Burg, Earth
+Pr(John=True | Burg=False, Earth=True)
     0.3106842105263158
     0.29633333333333334
     0.28815
@@ -16,9 +16,19 @@ John | Not_Burg, Earth
     0.2941111111111111
     0.28385714285714286
 
-John | Burg, Earth, Alarm
+Pr(John=True | Burg=True, Earth=True, Alarm=True)
 	0.9007777777777778
 	0.899
 	0.8974444444444445
 	0.9016666666666666
 	0.8954285714285715
+
+Pr(Xray=positive | Pollution=high, Smoker=true)
+    0.23735714285714285
+    0.2301111111111111
+    0.23644444444444446
+    0.2348888888888889
+    0.237
+    0.226
+
+Pr(Cancer=True | Pollution=high, Xray=positive)

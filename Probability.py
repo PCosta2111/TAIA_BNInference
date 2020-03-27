@@ -80,3 +80,4 @@ class Probability:
         for (xi, i) in p.universe:
             u.append(str(bool(i)))
         return ('True', 'False'), tuple(u)
+

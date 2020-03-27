@@ -1,9 +1,10 @@
 import argparse
-import random
+
 import pandas as pd
-from BIFParser import fix_white_space, parse_bif, print_nodes
+
+from BIFParser import fix_white_space, parse_bif
 from Probability import Probability
-from Utils import process_arguments, get_value_var, is_in_prob_list, encode_nodes
+from Utils import process_arguments, get_value_var, encode_nodes, get_new_vi_x, is_in_prob_list
 
 parser = argparse.ArgumentParser(description='Estimate a probability.')
 parser.add_argument('-t', '--target', metavar='xi')
@@ -11,13 +12,14 @@ parser.add_argument('-u', '--universe', nargs='+')
 parser.add_argument('-i', '--maxiter', metavar='20000', default=20000, type=int)
 parser.add_argument('-c', '--converfactor', metavar='0.001', default=0.001, type=float)
 parser.add_argument('-r', '--repeat', metavar='1', default=1, type=int)
+parser.add_argument('-b', '--bnet', metavar='earthquake.bif', default="earthquake.bif")
 args = parser.parse_args()
 
-f = open("cancer.bif", "r")
+f = open(args.bnet, "r")
 BIF = f.readlines()
 BIF = fix_white_space(BIF)
 nodes = parse_bif(BIF)
-print_nodes(nodes)
+# print_nodes(nodes)
 nodes, encode_dict = encode_nodes(nodes)
 t, u = process_arguments(args, nodes, encode_dict)
 print(t, u)
@@ -45,6 +47,7 @@ def estimate(xi, all_probs):
 
 for it in range(0, args.repeat):
     v = {}
+    new_vi = {}
     for n in nodes:
         v[n] = get_value_var(n, t, u, encode_dict, nodes)
     prob_lst = initialize_variables()
@@ -58,9 +61,10 @@ for it in range(0, args.repeat):
         for xi in nodes:
             probability = estimate((xi, v[xi]), prob_lst)
             if not is_in_prob_list(xi, u):
-                r = random.uniform(0, 1)
-                if r > probability:
-                    v[xi] = int(not (v[xi]))
+                new_vi[xi] = get_new_vi_x(xi, v)
+            else:
+                new_vi[xi] = v[xi]
+        v = new_vi
         prob_lst = initialize_variables()
         i += 1
         if i > 1000:
