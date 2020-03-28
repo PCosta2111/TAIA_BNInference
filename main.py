@@ -2,7 +2,7 @@ import argparse
 
 import pandas as pd
 
-from BIFParser import fix_white_space, parse_bif
+from BIFParser import fix_white_space, parse_bif, print_nodes
 from Probability import Probability
 from Utils import process_arguments, get_value_var, encode_nodes, get_new_vi_x, is_in_prob_list
 
@@ -40,8 +40,11 @@ def estimate(xi, all_probs):
             pos_prob.extend([p])
     prob_variations = [p.get_all_probabilities(xi, nodes) for p in pos_prob]
     prob_variations = [Probability.get_prob_list_value(lst) for lst in prob_variations]
-    res = Probability.get_prob_list_value(pos_prob) / (
+    try:
+        res = Probability.get_prob_list_value(pos_prob) / (
             Probability.get_prob_list_value(pos_prob) + sum(prob_variations))
+    except ZeroDivisionError:
+        return 0
     return res
 
 
