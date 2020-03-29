@@ -42,8 +42,8 @@ class Probability:
                 return False
         return True
 
-    def get_all_probabilities(self, v, nodes):
-        values = self.get_var_values(nodes, v)
+    def get_all_probabilities(self, v):
+        values = self.get_var_values(v)
         probs = []
         for value in values:
             if self.target[0].name == v[0].name:
@@ -59,7 +59,7 @@ class Probability:
             probs.append(Probability(x, u))
         return probs
 
-    def get_var_values(self, nodes, v):
+    def get_var_values(self, v):
         if len(v[0].parents) == 0:
             d = v[0].get_dist()
             k = list(d.keys())[0]

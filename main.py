@@ -22,7 +22,6 @@ BIF = fix_white_space(BIF)
 nodes = parse_bif(BIF)
 nodes, encode_dict = encode_nodes(nodes)
 t, u = process_arguments(args, nodes, encode_dict)
-print(t, u)
 
 
 def initialize_variables():
@@ -34,15 +33,15 @@ def initialize_variables():
 
 
 def estimate(xi, all_probs):
-    pos_prob = []
+    numerator_prob = []
     for p in all_probs:
         if xi[0] in p:
-            pos_prob.extend([p])
-    prob_variations = [p.get_all_probabilities(xi, nodes) for p in pos_prob]
+            numerator_prob.extend([p])
+    prob_variations = [p.get_all_probabilities(xi) for p in numerator_prob]
     prob_variations = [Probability.get_prob_list_value(lst) for lst in prob_variations]
     try:
-        res = Probability.get_prob_list_value(pos_prob) / (
-            Probability.get_prob_list_value(pos_prob) + sum(prob_variations))
+        res = Probability.get_prob_list_value(numerator_prob) / (
+            Probability.get_prob_list_value(numerator_prob) + sum(prob_variations))
     except ZeroDivisionError:
         return 0
     return res
