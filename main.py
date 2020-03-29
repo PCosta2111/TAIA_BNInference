@@ -1,4 +1,5 @@
 import argparse
+import time
 
 import pandas as pd
 
@@ -19,7 +20,6 @@ f = open(args.bnet, "r")
 BIF = f.readlines()
 BIF = fix_white_space(BIF)
 nodes = parse_bif(BIF)
-# print_nodes(nodes)
 nodes, encode_dict = encode_nodes(nodes)
 t, u = process_arguments(args, nodes, encode_dict)
 print(t, u)
@@ -60,6 +60,7 @@ for it in range(0, args.repeat):
     prev_prob = 0
 
     print("Processing inference number : " + str(it))
+    start_time = time.time()
     while len(df) < args.maxiter:
         for xi in nodes:
             probability = estimate((xi, v[xi]), prob_lst)
@@ -81,3 +82,4 @@ for it in range(0, args.repeat):
             prev_prob = curr_prob
     if len(df) >= args.maxiter:
         print("   => Maximum number of iterations reached. Result: " + str(len(df[df[t[0].name] == t[1]]) / len(df)))
+    print("     Elapsed time: " + str(time.time() - start_time))

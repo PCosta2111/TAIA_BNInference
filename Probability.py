@@ -25,6 +25,23 @@ class Probability:
     def __repr__(self):
         return self.__str__()
 
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, Probability):
+            return False
+        if o.target[0] != self.target[0] or o.target[1] != self.target[1]:
+            return False
+        if len(self.universe) != len(o.universe):
+            return False
+        for (xi, i) in self.universe:
+            found = False
+            for (xi1, i1) in o.universe:
+                if xi1 == xi and i == i1:
+                    found = True
+                    break
+            if not found:
+                return False
+        return True
+
     def get_all_probabilities(self, v, nodes):
         values = self.get_var_values(nodes, v)
         probs = []
@@ -80,4 +97,3 @@ class Probability:
         for (xi, i) in p.universe:
             u.append(str(bool(i)))
         return ('True', 'False'), tuple(u)
-
