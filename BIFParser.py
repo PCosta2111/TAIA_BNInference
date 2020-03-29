@@ -3,13 +3,18 @@
 """
 This is a script that parses a BIF (Bayesian Implementation Format) file passed by the command line.
 """
+# ==========================================================================
+# =               THIS CODE BELONGS TO @atcbosselut GitHub.com             =
+# =   https://github.com/atcbosselut/bif-parser/blob/master/BIFParser.py   =
+# ==========================================================================
+
+
 from __future__ import division
 
+import re
 from pprint import pprint
 
 import Node
-import sys
-import re
 
 __author__ = "Antoine Bosselut"
 __version__ = "1.0.2"

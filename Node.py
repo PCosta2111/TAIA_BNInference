@@ -7,6 +7,13 @@ This is my implementation for a node. Feel free to alter it based on your own de
 If you change the node constructor parameters, however, remember to change the BIF parse script so that the number of variables
 received by the constructor is the same as the number of variables given to the constructor.
 """
+
+# ==========================================================================
+# =               THIS CODE BELONGS TO @atcbosselut GitHub.com             =
+# =   https://github.com/atcbosselut/bif-parser/blob/master/BIFParser.py   =
+# ==========================================================================
+
+
 from __future__ import division
 
 __author__ = "Antoine Bosselut"
